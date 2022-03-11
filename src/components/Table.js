@@ -1,10 +1,27 @@
 import "./Table.css";
+import React, { useEffect, useState } from "react";
+
 const Table = ({ planetsInfo, tableHeadings }) => {
 
+  console.log(planetsInfo)
+
+  let results = []
+
+  const [sortOrder, setSortOrder] = useState();
+  // let arr = planetsInfo.map((info) => {
+  //   console.log(info)
+  // }
+
+ planetsInfo.map(info => {
+   info.results.sort((a, b) => a.name > b.name ? 1 : -1).map(data => {
+  
+    results.push(data)
+   })
+ })
 
   //sorted the planets by name
- let sorted = planetsInfo.sort((a, b) => a.name > b.name ? 1 : -1)
- console.log(sorted)
+ let sorted = results.sort((a, b) => a.name > b.name ? 1 : -1)
+ console.log(sorted.length)
 
   return (
     <>
