@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+Overview
+There is a free API online that provides endpoints to fetch data about Starwars. Some of this data includes the people of Starwars, the spaceships, and the planets.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The API can be accessed here: SWAPI. On this site, you can run requests to see how the data is returned.
 
-## Available Scripts
+For this assignment, we will only be focusing on planets. There a total of 60 planets in the Starwars universe.
 
-In the project directory, you can run:
+The only API endpoint that you will need to work with will be the planets endpoint (https://swapi.dev/api/planets/)
 
-### `npm start`
+HINT: The endpoint provided only fetches 10 planets, but there are 60 total. You will need to find a way to retrieve all 60. Pay attention closely to the data that is returned from the endpoint call.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Requirements
+What we would like you to do is to create a React web page that displays a bar chart and a table of the planet's attributes.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The bar chart should only show the population of each planet.
 
-### `npm test`
+The X Axis will be the planet's name. The Y Axis will be the planet's population.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The table should show the following attributes of each planet:
 
-### `npm run build`
+Name
+Population
+Rotation Period
+Orbital Period
+Diameter
+Climate
+Surface Water
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The table and bar chart should be ordered alphabetically by the planet's name.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Here are some optional (nice-to-have) features:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Pagination for the table (show 10 planets each page)
+Ability to choose to graph different attributes on the bar chart (rotation period, orbital period, etc)
+You will need to use a graphing library to display the bar chart. There are many graphing libraries in JavaScript to choose from.
 
-### `npm run eject`
+Here are some suggestions, but feel free to use whatever you want:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Plotly
+Chart.js
+Both Plotly & Chart.js have React wrapper libraries that you can use.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Deliverables
+Please commit your code to a GitHub repository and share the link to lee.derek@gene.com when completed
+Please verify that your code successfully loads before submitting
+You can start up the project with create-react-app (recommended).
+It is recommended that you write your components using React hooks.
+You are free to use any other libraries that you think may be needed for this project. All packages should be listed in the package.json for the project
+You can design the web page to any layout that you want.
+You can use any version of React.
