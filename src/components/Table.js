@@ -1,9 +1,9 @@
 import "./Table.css";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 const Table = ({ planetsInfo, tableHeadings }) => {
 
-  console.log(planetsInfo)
+
 
   let results = []
 
@@ -19,9 +19,13 @@ const Table = ({ planetsInfo, tableHeadings }) => {
    })
  })
 
+ const CapitlizeString = (str) => {
+   return str[0].toUpperCase() + str.slice(1)
+ }
+
   //sorted the planets by name
  let sorted = results.sort((a, b) => a.name > b.name ? 1 : -1)
- console.log(sorted.length)
+ 
 
   return (
     <>
@@ -34,14 +38,14 @@ const Table = ({ planetsInfo, tableHeadings }) => {
           </tr>
         </thead>
         <tbody>
-          {sorted.map((planet) => (
-            <tr>
+          {sorted.map((planet, index) => (
+            <tr key={index}>
               <td> {planet.name}</td>
-              <td> {planet.population.toLocaleString()}</td>
+              <td> {parseInt(planet.population).toLocaleString() === 'NaN' ? "??" : parseInt(planet.population).toLocaleString() }</td>
               <td> {planet.rotation_period}</td>
               <td> {planet.orbital_period}</td>
-              <td> {planet.diameter}</td>
-              <td> {planet.climate}</td>
+              <td> {parseInt(planet.diameter).toLocaleString() === 'NaN' ? "??" : parseInt(planet.diameter).toLocaleString() }</td>
+              <td> {CapitlizeString(planet.climate)}</td>
               <td> {planet.surface_water === 'unknown' ? '??' : planet.surface_water }</td>
             </tr>
           ))}

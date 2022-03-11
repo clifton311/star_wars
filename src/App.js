@@ -2,6 +2,20 @@ import "./App.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Table from "./components/Table";
+import { Bar } from 'react-chartjs-2';
+import Chart from './components/Chart'
+
+
+
+const tableHeadings = [
+  "Name",
+  "Population",
+  "Rotation Period",
+  "Orbital Period",
+  "Diameter",
+  "Climate",
+  "Surface Water",
+];
 
 function App() {
   const [planetsInfo, setPlanetsInfo] = useState([]);
@@ -32,15 +46,6 @@ function App() {
     getPlanets();
   }, []);
 
-  const tableHeadings = [
-    "Name",
-    "Population",
-    "Rotation Period",
-    "Orbital Period",
-    "Diameter",
-    "Climate",
-    "Surface Water",
-  ];
 
   if (loading) return <h1>Loading...</h1>;
 
@@ -48,9 +53,13 @@ function App() {
     <div className="App">
       <h2>Star Wars Planets</h2>
       <>
+        <Chart planetsInfo={planetsInfo}/>
+
+        <br></br>
+        <h1>Table of Planets</h1>
         <Table planetsInfo={planetsInfo} tableHeadings={tableHeadings} />
-        <button>Next</button>
       </>
+      
     </div>
   );
 }
