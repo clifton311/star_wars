@@ -1,56 +1,75 @@
 import "./Table.css";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 
-const Table = ({ planetsInfo, tableHeadings }) => {
+const Table = ({
+  sortedPlanets,
+  tableHeadings,
+  sort,
+  setPage,
+  handlePreviousPageClick,
+  page,
+}) => {
+  const CaptilizeString = (str) => {
+    return str[0].toUpperCase() + str.slice(1);
+  };
 
-
-
-  let results = []
-
-  const [sortOrder, setSortOrder] = useState();
-  // let arr = planetsInfo.map((info) => {
-  //   console.log(info)
-  // }
-
- planetsInfo.map(info => {
-   info.results.sort((a, b) => a.name > b.name ? 1 : -1).map(data => {
-  
-    results.push(data)
-   })
- })
-
- const CapitlizeString = (str) => {
-   return str[0].toUpperCase() + str.slice(1)
- }
-
-  //sorted the planets by name
- let sorted = results.sort((a, b) => a.name > b.name ? 1 : -1)
- 
+  const handleNextClick = () => {
+    setPage();
+  };
 
   return (
     <>
-      <table >
-        <thead >
+      <table>
+        <thead>
           <tr>
             {tableHeadings.map((name, index) => (
-              <th key={index}>{name}</th>
+              <th key={index} onClick={() => sort(name)}>
+                {name}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {sorted.map((planet, index) => (
+          {sortedPlanets.map((planet, index) => (
             <tr key={index}>
               <td> {planet.name}</td>
-              <td> {parseInt(planet.population).toLocaleString() === 'NaN' ? "??" : parseInt(planet.population).toLocaleString() }</td>
+              <td>
+                {" "}
+                {parseInt(planet.population).toLocaleString() === "NaN"
+                  ? "??"
+                  : parseInt(planet.population).toLocaleString()}
+              </td>
               <td> {planet.rotation_period}</td>
-              <td> {planet.orbital_period}</td>
-              <td> {parseInt(planet.diameter).toLocaleString() === 'NaN' ? "??" : parseInt(planet.diameter).toLocaleString() }</td>
-              <td> {CapitlizeString(planet.climate)}</td>
-              <td> {planet.surface_water === 'unknown' ? '??' : planet.surface_water }</td>
+              <td>
+                {" "}
+                {parseInt(planet.orbital_period).toLocaleString() === "NaN"
+                  ? "??"
+                  : parseInt(planet.orbital_period).toLocaleString()}
+              </td>
+              <td>
+                {" "}
+                {parseInt(planet.diameter).toLocaleString() === "NaN"
+                  ? "??"
+                  : parseInt(planet.diameter).toLocaleString()}
+              </td>
+              <td> {CaptilizeString(planet.climate)}</td>
+              <td>
+                {" "}
+                {planet.surface_water === "unknown"
+                  ? "??"
+                  : planet.surface_water}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {page === 1 ? (
+        ""
+      ) : (
+        <button onClick={handlePreviousPageClick}>Previous</button>
+      )}
+      {page >= 6 ? "" : <button onClick={handleNextClick}>Next</button>}
+
     </>
   );
 };

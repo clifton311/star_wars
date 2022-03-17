@@ -41,7 +41,6 @@ const Chart = ({ planetsInfo }) => {
       });
     });
 
-    console.log(populationArray)
 
     return populationArray
   };
