@@ -9,27 +9,38 @@ h1{
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+
+
+.paginationBttns {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 4rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid feda4a;
+  color: black;
+  cursor: pointer;
 }
 
-
-.App-link {
-  color: #61dafb;
+.paginationBttns a:hover {
+  color: #feda4a;
+  background-color: black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.paginationActive a {
+  color: white;
+  background-color: #feda4a;
+}
+
+.paginationDisabled a {
+  color: grey;
+  background-color: grey;
 }

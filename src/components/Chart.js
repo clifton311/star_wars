@@ -19,30 +19,29 @@ ChartJS.register(
 );
 
 const Chart = ({ planetsInfo }) => {
-
-
   const grabPlanets = (planetsInfo) => {
     let names = [];
-    planetsInfo.map((info) => {
-      info.results.sort((a, b) => a.name > b.name ? 1 : -1).map((result) => {
+    planetsInfo
+      .flat()
+      .sort((a, b) => (a.name > b.name ? 1 : -1))
+      .map((result) => {
         names.push(result.name);
       });
-    });
 
-    return names
+    return names;
   };
-
 
   const grabPopulation = (planetsInfo) => {
     let populationArray = [];
     planetsInfo.map((info) => {
-      info.results.sort((a, b) => a.name > b.name ? 1 : -1).map((result) => {
-        populationArray.push(result.population);
-      });
+      info
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map((result) => {
+          populationArray.push(result.population);
+        });
     });
 
-
-    return populationArray
+    return populationArray;
   };
 
   const data = {

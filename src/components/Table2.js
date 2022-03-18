@@ -1,14 +1,8 @@
 import "./Table.css";
 import React, { useState } from "react";
+import ReactPaginate from "react-paginate";
 
-const Table = ({
-  sortedPlanets,
-  tableHeadings,
-  sort,
-  handleNextPageClick,
-  handlePreviousPageClick,
-  page,
-}) => {
+const Table2 = ({ sortedPlanets, tableHeadings, sort }) => {
   const CaptilizeString = (str) => {
     return str[0].toUpperCase() + str.slice(1);
   };
@@ -59,15 +53,8 @@ const Table = ({
           ))}
         </tbody>
       </table>
-      {page === 1  ? (
-        ""
-      ) : (
-        <button onClick={handlePreviousPageClick}>Previous Page</button>
-      )}
-      {page >= 6  ? "" : <button onClick={handleNextPageClick}>Next Page</button>}
-
     </>
   );
 };
 
-export default Table;
+export default Table2;
