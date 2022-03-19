@@ -20,13 +20,13 @@ const baseUrl = `https://swapi.dev/api`;
 
 function App() {
   const headerRef = useRef();
-
   const [planetsInfo, setPlanetsInfo] = useState([]);
   const [planets, setPlanets] = useState([]);
 
   const [page, setPage] = useState(1);
 
   const [loading, setLoading] = useState(false);
+
   const [order, setOrder] = useState("ASC");
 
   const [pageNumber, setPageNumber] = useState(1);
@@ -42,7 +42,9 @@ function App() {
       }
 
       Promise.all(planets).then((data) => {
-        setPlanetsInfo(data);
+        let sortedData = data.flat()
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        setPlanetsInfo(sortedData);
         setLoading(false);
       });
     } catch (err) {
@@ -84,21 +86,21 @@ function App() {
     }
   };
 
+  // const sortPlanetsByName = (planetsInfo) => {
+  //   let results = [];
+  //   planetsInfo.map((info) => {
+  //     info
+  //       .sort((a, b) => (a.name > b.name ? 1 : -1))
+  //       .map((data) => {
+  //         results.push(data);
+  //       });
+  //   });
+  //   let sorted = results.sort((a, b) => (a.name > b.name ? 1 : -1));
+
+  //   return sorted;
+  // };
+
   const sortPlanetsByName = (planetsInfo) => {
-    let results = [];
-    planetsInfo.map((info) => {
-      info
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map((data) => {
-          results.push(data);
-        });
-    });
-    let sorted = results.sort((a, b) => (a.name > b.name ? 1 : -1));
-
-    return sorted;
-  };
-
-  const sortPlanetsByName2 = (planetsInfo) => {
     let sorted = planetsInfo.sort((a, b) => (a.name > b.name ? 1 : -1));
     return sorted;
   };
@@ -115,16 +117,13 @@ function App() {
     getPlanets();
   }, []);
 
-  console.log(planetsInfo);
-
   const itemsPerPage = 10;
   const pagesVisted = pageNumber * itemsPerPage;
 
   const displayPlanets = planetsInfo
     .flat()
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
     .slice(pagesVisted, pagesVisted + itemsPerPage);
-
-  console.log("displayPlanets", displayPlanets);
 
   const pageCount = Math.ceil(planetsInfo.flat().length / itemsPerPage);
 
@@ -141,7 +140,7 @@ function App() {
         <h1 ref={headerRef}>Table of Planets</h1>
         <Table
           // sortedPlanets={sortPlanetsByName(planetsInfo)}
-          sortedPlanets={sortPlanetsByName2(planets)}
+          sortedPlanets={sortPlanetsByName(planets)}
           tableHeadings={tableHeadings}
           sort={sort}
           handleNextPageClick={handleNextPageClick}
@@ -150,7 +149,7 @@ function App() {
         />
 
         <Table2
-          sortedPlanets={sortPlanetsByName2(displayPlanets)}
+          sortedPlanets={sortPlanetsByName(displayPlanets)}
           tableHeadings={tableHeadings}
           sort={sort}
         />
@@ -165,9 +164,11 @@ function App() {
           disabledClassName={"paginationDisabled"}
           activeClassName={"paginationActive"}
         />
-        <h1>Population Chart</h1>
-        <Chart planetsInfo={planetsInfo} />
-        <br></br>
+        <div className="chart">
+          <h1>Population Chart</h1>
+          <Chart planetsInfo={planetsInfo} />
+          <br></br>
+        </div>
       </>
     </div>
   );

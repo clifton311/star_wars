@@ -19,44 +19,76 @@ ChartJS.register(
 );
 
 const Chart = ({ planetsInfo }) => {
-  const grabPlanets = (planetsInfo) => {
-    let names = [];
-    planetsInfo
-      .flat()
-      .sort((a, b) => (a.name > b.name ? 1 : -1))
-      .map((result) => {
-        names.push(result.name);
-      });
 
-    return names;
+  console.log(planetsInfo)
+  const grabPlanetsPopulation = (planetsInfo) => {
+    let population = []
+    planetsInfo.map((result) => {
+      population.push(result.population)
+     
+    });
+
+    return population
   };
 
+  console.log(grabPlanetsPopulation(planetsInfo));
+
   const grabPopulation = (planetsInfo) => {
+  
+    planetsInfo.map((planet) => {
+      return planet.population;
+    });
+  };
+
+  const grabRotationPeriod = (planetsInfo) => {
     let populationArray = [];
-    planetsInfo.map((info) => {
-      info
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map((result) => {
-          populationArray.push(result.population);
-        });
+    planetsInfo.map((planet) => {
+     return planet.rotatio_period
     });
 
     return populationArray;
   };
 
   const data = {
-    labels: grabPlanets(planetsInfo),
+    labels: planetsInfo.map(planet => planet.name),
     datasets: [
       {
         label: "Population of Planets",
-        data: grabPopulation(planetsInfo),
+        data: grabPlanetsPopulation(planetsInfo) ,
         backgroundColor: "yellow",
+        borderColor: "black",
+      },
+      {
+        label: "Orbital Period",
+        data:  planetsInfo.map(planet => planet.orbital_period),
+        backgroundColor: "black",
+        borderColor: "black",
+      },
+      {
+        label: "Rotation Period",
+        data:  planetsInfo.map(planet => planet.rotation_period),
+        backgroundColor: "green",
+        borderColor: "black",
+      },
+      {
+        label: "Surface Water",
+        data:  planetsInfo.map(planet => planet.surface_water),
+        backgroundColor: "blue",
+        borderColor: "black",
       },
     ],
   };
 
   const options = {
     responsive: true,
+    scaleShowValues: true,
+    scales: {
+      xAxes: [{
+        ticks: {
+          autoSkip: true
+        }
+      }]
+    },
     plugins: {
       legend: {
         position: "top",
@@ -67,7 +99,11 @@ const Chart = ({ planetsInfo }) => {
       },
     },
   };
-  return <Bar options={options} data={data} />;
+  return (
+    <div style={{ width: "1200px" }}>
+      <Bar options={options} data={data} />;
+    </div>
+  );
 };
 
 export default Chart;
