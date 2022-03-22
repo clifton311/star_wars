@@ -20,47 +20,40 @@ ChartJS.register(
 
 const Chart = ({ planetsInfo }) => {
 
-
-
-
+  console.log(planetsInfo)
   const grabPlanetsPopulation = (planetsInfo) => {
-    let population = []
+    let population = [];
     planetsInfo.map((result) => {
-      population.push(result.population)
-     
+      population.push(result.population);
     });
 
-    return population
+    return population;
   };
 
- 
-
-
-
   const data = {
-    labels: planetsInfo.map(planet => planet.name),
+    labels: planetsInfo?.map((planet) => planet.name),
     datasets: [
       {
         label: "Population of Planets",
-        data:  planetsInfo.map(planet => planet.population) ,
+        data: planetsInfo?.map((planet) => parseInt(planet.population)),
         backgroundColor: "yellow",
         borderColor: "black",
       },
       {
         label: "Orbital Period",
-        data:  planetsInfo.map(planet => planet.orbital_period),
+        data: planetsInfo?.map((planet) => planet.orbital_period),
         backgroundColor: "black",
         borderColor: "black",
       },
       {
         label: "Rotation Period",
-        data:  planetsInfo.map(planet => planet.rotation_period),
+        data: planetsInfo?.map((planet) => planet.rotation_period),
         backgroundColor: "green",
         borderColor: "black",
       },
       {
         label: "Surface Water",
-        data:  planetsInfo.map(planet => planet.surface_water),
+        data: planetsInfo?.map((planet) => planet.surface_water),
         backgroundColor: "blue",
         borderColor: "black",
       },
@@ -69,8 +62,8 @@ const Chart = ({ planetsInfo }) => {
 
   const options = {
     responsive: true,
-    scaleShowValues: true,
-  
+    scaleShowValues: false,
+
     plugins: {
       legend: {
         position: "top",

@@ -18,7 +18,7 @@ const Table = ({
       <table>
         <thead>
           <tr>
-            {tableHeadings.map((name, index) => (
+            {tableHeadings?.map((name, index) => (
               <th key={index} onClick={() => sort(name)}>
                 {name}
               </th>
@@ -26,7 +26,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {sortedPlanets.map((planet, index) => (
+          {sortedPlanets?.map((planet, index) => (
             <tr key={index}>
               <td> {planet.name}</td>
               <td>
