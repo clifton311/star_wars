@@ -1,7 +1,7 @@
 
 # Overview
 
-Take Home Coding Assessement for candidate Clifton Ho.
+Take Home Coding Assessement for candidate **Clifton Ho**.
 
 Application was built with Create React App.
 
@@ -18,12 +18,14 @@ The second table is pagination for a table of the Star Wars planes when all the 
 
 I did pagination both ways to show case both ways. Both tables are ordered alphabetically by the planet's name. 
 
-Additional Features would add:
+Additional Features I would have added:
 
 Able to sort columns in order by clicking.
 
+____________________________________________________________
 
-Overview
+
+# Directions
 There is a free API online that provides endpoints to fetch data about Starwars. Some of this data includes the people of Starwars, the spaceships, and the planets.
 
 The API can be accessed here: SWAPI. On this site, you can run requests to see how the data is returned.

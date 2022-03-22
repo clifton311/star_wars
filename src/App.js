@@ -34,7 +34,6 @@ function App() {
   const [error, setError] = useState(null);
 
   const getPlanets = async () => {
-    const all = [];
     if (!grabbedAllPlanets && !error) {
       await axios
         .get(`https://swapi.dev/api/planets/?page=${page}`)
@@ -59,7 +58,6 @@ function App() {
     try {
       setLoading(true);
       const planets = await axios.get(`${baseUrl}/?page=${nextPage}`);
-
       setPlanets(planets.data.results);
 
       setLoading(false);
@@ -117,10 +115,11 @@ function App() {
   }, [nextPage]);
 
   useEffect(() => {
+    //function to grab all available planets from api
     getPlanets();
   }, [page]);
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <h1>Loading Planets...</h1>;
 
   return (
     <div className="App">
