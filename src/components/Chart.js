@@ -20,28 +20,19 @@ ChartJS.register(
 
 const Chart = ({ planetsInfo }) => {
 
-  console.log(planetsInfo)
-  const grabPlanetsPopulation = (planetsInfo) => {
-    let population = [];
-    planetsInfo.map((result) => {
-      population.push(result.population);
-    });
-
-    return population;
-  };
-
   const data = {
-    labels: planetsInfo?.map((planet) => planet.name),
+    labels: planetsInfo.map((planet) => planet.name),
     datasets: [
       {
         label: "Population of Planets",
-        data: planetsInfo?.map((planet) => parseInt(planet.population)),
+        data: planetsInfo.map((planet) => parseInt(planet.population)),
         backgroundColor: "yellow",
         borderColor: "black",
+        redraw: true
       },
       {
         label: "Orbital Period",
-        data: planetsInfo?.map((planet) => planet.orbital_period),
+        data: planetsInfo.map((planet) => planet.orbital_period),
         backgroundColor: "black",
         borderColor: "black",
       },
@@ -70,13 +61,13 @@ const Chart = ({ planetsInfo }) => {
       },
       title: {
         display: true,
-        text: "Population",
+        text: "Population of Star Wars Planets",
       },
     },
   };
   return (
-    <div style={{ width: "1200px" }}>
-      <Bar options={options} data={data} />;
+    <div style={{ width: "1400px" }}>
+      <Bar options={options} data={data} redraw={true} />;
     </div>
   );
 };

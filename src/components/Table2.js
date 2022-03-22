@@ -1,6 +1,6 @@
-import "./Table.css";
-import React, { useState } from "react";
-import ReactPaginate from "react-paginate";
+import "./Table2.css";
+import React from "react";
+
 
 const Table2 = ({ sortedPlanets, tableHeadings, sort }) => {
   const CaptilizeString = (str) => {

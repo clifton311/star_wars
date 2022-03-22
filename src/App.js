@@ -3,7 +3,6 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import Table from "./components/Table";
 import Table2 from "./components/Table2";
-import { Bar } from "react-chartjs-2";
 import Chart from "./components/Chart";
 import ReactPaginate from "react-paginate";
 
@@ -20,17 +19,18 @@ const baseUrl = `https://swapi.dev/api/planets`;
 
 function App() {
   const headerRef = useRef();
+
   const [planetsInfo, setPlanetsInfo] = useState([]);
-
   const [planets, setPlanets] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+  
   const [order, setOrder] = useState("ASC");
-  const [pageNumber, setPageNumber] = useState(1);
 
-  const [page, setPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
   const [nextPage, setNextPage] = useState(1);
+  
+  const [page, setPage] = useState(1);
   const [grabbedAllPlanets, setGrabbedAllPlanets] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const getPlanets = async () => {
@@ -68,8 +68,21 @@ function App() {
     }
   };
 
+  //////Code for Pagination ///////
+  const itemsPerPage = 10;
+  const pagesVisted = pageNumber * itemsPerPage;
+  const displayPlanets = planetsInfo
+    .flat()
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+    .slice(pagesVisted, pagesVisted + itemsPerPage);
+
+  const pageCount = Math.ceil(planetsInfo.flat().length / itemsPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   const handleNextPageClick = () => {
-    if (nextPage > 6) return;
+    if (nextPage > pageCount) return;
     setNextPage((prevPage) => prevPage + 1);
   };
 
@@ -89,26 +102,13 @@ function App() {
   };
 
   const sortPlanetsByName = (planetsInfo) => {
-      let sorted = planetsInfo.sort((a, b) => (a.name > b.name ? 1 : -1));
+    let sorted = planetsInfo.sort((a, b) => (a.name > b.name ? 1 : -1));
 
-      return sorted;
-    
-  };
-
-  //////Code for Pagination ///////
-  const itemsPerPage = 10;
-  const pagesVisted = pageNumber * itemsPerPage;
-  const displayPlanets = planetsInfo
-    .flat()
-    .sort((a, b) => (a.name > b.name ? 1 : -1))
-    .slice(pagesVisted, pagesVisted + itemsPerPage);
-
-  const pageCount = Math.ceil(planetsInfo.flat().length / itemsPerPage);
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
+    return sorted;
   };
 
   useEffect(() => {
+    // function to grab ten planets per page
     getTenPlanets();
     const autoScroll = () => {
       headerRef.current.scrollIntoView({ behavior: "smooth" });
@@ -124,9 +124,9 @@ function App() {
 
   return (
     <div className="App">
-      <h2>Star Wars Planets</h2>
+      <h1>Star Wars Planets</h1>
       <>
-        <h1 ref={headerRef}>Table of Planets</h1>
+        <h2 ref={headerRef}>Table of Planets</h2>
         <Table
           sortedPlanets={sortPlanetsByName(planets)}
           tableHeadings={tableHeadings}
@@ -135,7 +135,7 @@ function App() {
           handlePreviousPageClick={handlePreviousPageClick}
           nextPage={nextPage}
         />
-        <h1>Table of Planets with Pagination </h1>
+        <h2>Table of Planets with Pagination </h2>
         <Table2
           sortedPlanets={sortPlanetsByName(displayPlanets)}
           tableHeadings={tableHeadings}
@@ -153,7 +153,7 @@ function App() {
           activeClassName={"paginationActive"}
         />
         <div className="chart">
-          <h1>Planets Chart</h1>
+          <h2>Planets Chart</h2>
           <Chart planetsInfo={sortPlanetsByName(planetsInfo)} />
           <br></br>
         </div>
