@@ -7,7 +7,7 @@ const Table = ({
   sort,
   handleNextPageClick,
   handlePreviousPageClick,
-  page,
+  nextPage,
 }) => {
   const CaptilizeString = (str) => {
     return str[0].toUpperCase() + str.slice(1);
@@ -32,39 +32,39 @@ const Table = ({
               <td>
                 {" "}
                 {parseInt(planet.population).toLocaleString() === "NaN"
-                  ? "??"
+                  ? "Unknown"
                   : parseInt(planet.population).toLocaleString()}
               </td>
               <td> {planet.rotation_period}</td>
               <td>
                 {" "}
                 {parseInt(planet.orbital_period).toLocaleString() === "NaN"
-                  ? "??"
+                  ? "Unknown"
                   : parseInt(planet.orbital_period).toLocaleString()}
               </td>
               <td>
                 {" "}
                 {parseInt(planet.diameter).toLocaleString() === "NaN"
-                  ? "??"
+                  ? "Unknown"
                   : parseInt(planet.diameter).toLocaleString()}
               </td>
               <td> {CaptilizeString(planet.climate)}</td>
               <td>
                 {" "}
                 {planet.surface_water === "unknown"
-                  ? "??"
+                  ? "Unknown"
                   : planet.surface_water}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {page === 1  ? (
+      {nextPage === 1  ? (
         ""
       ) : (
         <button onClick={handlePreviousPageClick}>Previous Page</button>
       )}
-      {page >= 6  ? "" : <button onClick={handleNextPageClick}>Next Page</button>}
+      {nextPage >= 6  ? "" : <button onClick={handleNextPageClick}>Next Page</button>}
 
     </>
   );

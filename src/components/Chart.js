@@ -20,7 +20,9 @@ ChartJS.register(
 
 const Chart = ({ planetsInfo }) => {
 
-  console.log(planetsInfo)
+
+
+
   const grabPlanetsPopulation = (planetsInfo) => {
     let population = []
     planetsInfo.map((result) => {
@@ -31,30 +33,16 @@ const Chart = ({ planetsInfo }) => {
     return population
   };
 
-  console.log(grabPlanetsPopulation(planetsInfo));
+ 
 
-  const grabPopulation = (planetsInfo) => {
-  
-    planetsInfo.map((planet) => {
-      return planet.population;
-    });
-  };
 
-  const grabRotationPeriod = (planetsInfo) => {
-    let populationArray = [];
-    planetsInfo.map((planet) => {
-     return planet.rotatio_period
-    });
-
-    return populationArray;
-  };
 
   const data = {
     labels: planetsInfo.map(planet => planet.name),
     datasets: [
       {
         label: "Population of Planets",
-        data: grabPlanetsPopulation(planetsInfo) ,
+        data:  planetsInfo.map(planet => planet.population) ,
         backgroundColor: "yellow",
         borderColor: "black",
       },
@@ -82,13 +70,7 @@ const Chart = ({ planetsInfo }) => {
   const options = {
     responsive: true,
     scaleShowValues: true,
-    scales: {
-      xAxes: [{
-        ticks: {
-          autoSkip: true
-        }
-      }]
-    },
+  
     plugins: {
       legend: {
         position: "top",

@@ -16,49 +16,73 @@ const tableHeadings = [
   "Climate",
   "Surface Water",
 ];
-const baseUrl = `https://swapi.dev/api`;
+const baseUrl = `https://swapi.dev/api/planets`;
 
 function App() {
   const headerRef = useRef();
   const [planetsInfo, setPlanetsInfo] = useState([]);
+
   const [planets, setPlanets] = useState([]);
-
-  const [page, setPage] = useState(1);
-
   const [loading, setLoading] = useState(false);
 
   const [order, setOrder] = useState("ASC");
-
   const [pageNumber, setPageNumber] = useState(1);
 
-  const getPlanets = async () => {
-    try {
-      setLoading(true);
-      const planets = [];
-      for (let i = 1; i <= 6; i++) {
-        await axios.get(`${baseUrl}/planets/?page=${i}`).then((response) => {
-          planets.push(response.data.results);
-        });
-      }
+  const [page, setPage] = useState(1);
+  const [nextPage, setNextPage] = useState(1);
+  const [grabPlanets, setGrabPlanets] = useState(false);
+  const [error, setError] = useState(null);
 
-      Promise.all(planets).then((data) => {
-        let sortedData = data.flat()
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        setPlanetsInfo(sortedData);
-        setLoading(false);
-      });
-    } catch (err) {
-      console.log(err);
+  // const requestData = () =>
+  //   fetch(`https://swapi.dev/api/planets/?page=${page}`).then((res) => {
+  //     if (res.ok) {
+  //       let response = res.json();
+  //       console.log(response);
+  //       setPlanetsInfo(planetsInfo.concat(response.results));
+  //       setPage(page + 1);
+  //     } else if (res.status === 404) {
+  //       setGotEveryone(true);
+  //     } else {
+  //       setError(res.status);
+  //       return Promise.reject("some other error: " + res.status);
+  //     }
+  //   });
+
+  const getPlanets = async () => {
+    if (!grabPlanets && !error) {
+      await axios
+        .get(`https://swapi.dev/api/planets/?page=${page}`)
+        .then((res) => {
+          if (res.status === 404) {
+            setGrabPlanets(true);
+            setError(true);
+          } else {
+            const response =  res.data.results
+              setPlanetsInfo(planetsInfo.concat(response));
+              setPage(page + 1);
+            
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+    // Promise.all(planets).then((data) => {
+    //   let sortedData = data.flat().sort((a, b) => (a.name > b.name ? 1 : -1));
+    //   setPlanetsInfo(sortedData);
+    //   setLoading(false);
+    // });
   };
+
+
 
   const getTenPlanets = async () => {
     try {
       setLoading(true);
-      await axios.get(`${baseUrl}/planets/?page=${page}`).then((response) => {
-        let results = response.data.results;
-        setPlanets(results);
-      });
+      const planets = await fetch(`${baseUrl}/?page=${nextPage}`);
+      const json = await planets.json();
+
+      setPlanets(json.results);
 
       setLoading(false);
     } catch (err) {
@@ -67,13 +91,13 @@ function App() {
   };
 
   const handleNextPageClick = () => {
-    if (page > 6) return;
-    setPage((prevPage) => prevPage + 1);
+    if (nextPage > 6) return;
+    setNextPage((prevPage) => prevPage + 1);
   };
 
   const handlePreviousPageClick = () => {
-    if (page < 1) return;
-    setPage((prevPage) => prevPage - 1);
+    if (nextPage < 1) return;
+    setNextPage((prevPage) => prevPage - 1);
   };
 
   const sort = (col) => {
@@ -86,20 +110,6 @@ function App() {
     }
   };
 
-  // const sortPlanetsByName = (planetsInfo) => {
-  //   let results = [];
-  //   planetsInfo.map((info) => {
-  //     info
-  //       .sort((a, b) => (a.name > b.name ? 1 : -1))
-  //       .map((data) => {
-  //         results.push(data);
-  //       });
-  //   });
-  //   let sorted = results.sort((a, b) => (a.name > b.name ? 1 : -1));
-
-  //   return sorted;
-  // };
-
   const sortPlanetsByName = (planetsInfo) => {
     let sorted = planetsInfo.sort((a, b) => (a.name > b.name ? 1 : -1));
     return sorted;
@@ -111,11 +121,11 @@ function App() {
       headerRef.current.scrollIntoView({ behavior: "smooth" });
     };
     autoScroll();
-  }, [page]);
+  }, [nextPage]);
 
   useEffect(() => {
     getPlanets();
-  }, []);
+  }, [page]);
 
   const itemsPerPage = 10;
   const pagesVisted = pageNumber * itemsPerPage;
@@ -126,6 +136,7 @@ function App() {
     .slice(pagesVisted, pagesVisted + itemsPerPage);
 
   const pageCount = Math.ceil(planetsInfo.flat().length / itemsPerPage);
+
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -145,8 +156,9 @@ function App() {
           sort={sort}
           handleNextPageClick={handleNextPageClick}
           handlePreviousPageClick={handlePreviousPageClick}
-          page={page}
+          nextPage={nextPage}
         />
+        <h1>Table of Planets with Pagination </h1>
 
         <Table2
           sortedPlanets={sortPlanetsByName(displayPlanets)}
@@ -165,8 +177,8 @@ function App() {
           activeClassName={"paginationActive"}
         />
         <div className="chart">
-          <h1>Population Chart</h1>
-          <Chart planetsInfo={planetsInfo} />
+          <h1>Planets Chart</h1>
+          <Chart planetsInfo={sortPlanetsByName(planetsInfo)} />
           <br></br>
         </div>
       </>
