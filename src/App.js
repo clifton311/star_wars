@@ -36,7 +36,7 @@ function App() {
   const getPlanets = async () => {
     if (!grabbedAllPlanets && !error) {
       await axios
-        .get(`https://swapi.dev/api/planets/?page=${page}`)
+        .get(`${baseUrl}/?page=${page}`)
         .then((res) => {
           if (res.status === 404) {
             setGrabbedAllPlanets(true);
